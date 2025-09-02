@@ -1,0 +1,6 @@
+[AMDGPU]
+hard_memory_limit = "90 %"
+soft_memory_limit = "90 %"
+
+[FLUX]
+gpu_backend = "AMDGPU"

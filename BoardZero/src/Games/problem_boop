@@ -1,0 +1,54 @@
+ K  C  .  .  .  .
+ .  .  .  .  .  .
+ c  C  .  .  .  .
+ .  .  .  .  .  .
+ .  .  .  C  .  C
+ .  .  .  c  .  .
+ remaining : only cats
+ Capital letters play and win (C in 3, 3) because it gives :
+
+ K  C  .  .  .  .
+ .  .  .  .  .  .
+ c  C  C  .  .  .
+ .  .  .  .  .  .
+ .  .  .  C  .  C
+ .  .  .  c  .  .
+and whatever opponent does, he loses
+
+
+
+ .  .  C  .  k  .
+ .  c  .  .  C  .
+ k  .  .  .  .  .
+ .  .  k  C  c  .
+ .  .  .  .  .  .
+ .  k  C  .  C  .
+
+  remaining : KCC vs kc
+  Capital letters play and win : C in 3, 4 because afterwards we have :
+
+ .  .  C  .  k  C
+ .  c  .  .  .  .
+ k  .  .  C  .  .
+ .  .  .  .  .  .
+ .  k  .  C  .  c
+ .  k  C  .  C  .
+
+
+
+ .  .  .  C  .  c
+ .  .  .  C  .  k
+ .  .  .  c  .  C
+ .  .  .  C  c  .
+ .  .  .  .  .  .
+ .  .  c  .  C  .
+ remaining : enough cats
+ Capital letters play and win : C in 5, 5, because afterwars :
+
+ .  .  .  C  .  c
+ .  .  .  C  .  k
+ .  .  C  c  c  C
+ .  .  .  .  .  .
+ .  .  .  .  C  .
+ .  .  c  .  .  .
+ and 'c' can't be placed to avoid loss.

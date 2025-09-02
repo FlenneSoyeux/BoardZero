@@ -1,0 +1,16 @@
+{
+    "julia.executablePath": "/usr/bin/julia",
+    "julia.environmentPath": ".",
+    "julia.useRevise": true,
+    
+    "[julia]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.formatOnSave": true,
+        "editor.rulers": [92]
+    },
+    
+    "files.associations": {
+        "*.jl": "julia"
+    }
+}
