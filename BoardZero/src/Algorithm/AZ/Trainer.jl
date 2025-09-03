@@ -340,7 +340,7 @@ function train_parallel()
 
         GC.gc(true)
 
-        println("EPISODE ", ep, " ", NGAMES, " games done in ", total_time[2], "\tGPU time : ", time_gpu, "\treal_iter : ", real_iter, " /total_iter : ", total_iter, " i.e. ", 0.001*round(Int,total_time[2]*1000000/real_iter), " ms / iter",
+        println("EPISODE ", ep, " ", NGAMES, " games done in ", total_time[2], "\tGPU time : ", time_gpu, "\treal_iter : ", real_iter, " /total_iter : ", total_iter, " i.e. ", round(Int,total_time[2]*1000000/real_iter), " us / effective iteration",
                 "\n\taverage round : ", 0.1*round(Int, 10*sum_rounds[] / NGAMES),
                 "\tlength memory : ", length(memory.replayBuffer), "(new ", size_new, ")")
         println("Time before : ", time_before, " time after: ", time_after)
@@ -809,7 +809,7 @@ function learn_from_scratch()
 
     #Training
     imini, lossMini = 1, 100000
-    for i in 1:100
+    for i in 1:40
         println("Training...")
         Flux.trainmode!(nn)
         for (η, d) in zip(sched, dataTrain)
@@ -847,8 +847,16 @@ function learn_from_scratch()
             break
         end end
 
-        Stats.save_stats(cur_stats)
-        NNet.save(nn, cur_stats.id)
+        if i == 1 || i == 10 || i == 20 || i == 40
+            #push!(all_stats, cur_stats)
+            #Stats.print(all_stats)
+            NNet.save(nn, cur_stats.id)
+            Stats.save_stats(cur_stats)
+            cur_stats = Stats.Stat(cur_stats) # new one
+        end
+
+        #Stats.save_stats(cur_stats)
+        #NNet.save(nn, cur_stats.id)
     end
 end
 

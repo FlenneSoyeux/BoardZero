@@ -1,27 +1,27 @@
-const GAME = "Santorini"  # choices : Santorini ; Azul ; Boop ; Resolve
+const GAME = ARGS[1]  # choices : Santorini ; Azul ; Boop ; Resolve
 
 if GAME == "Santorini"
     const DIRECTORY = "Santorini/"
-    const CUCB = 0.25   #Best UCB on 1000 & 5000 -MCTS matches. +18ELO vs 0.2 and +12ELO vs 0.3
+    const CUCB = 0.25
     const HALFLIFE = 15
     const PARAMS_MCTS_ELO = Dict([200=>925, 400=>1138, 6400=>1640, 25600=>1879])
 
 elseif GAME == "Boop"
     const DIRECTORY = "Boop/"
-    const CUCB = 0.25   #Best UCB on 1000 & 5000 -MCTS matches. +18ELO vs 0.2 and +12ELO vs 0.
+    const CUCB = 0.25
     const HALFLIFE = 30
     const PARAMS_MCTS_ELO = Dict([100=>570, 400=>1000, 1600 => 1629, 6400 => 2112])
 
 
 elseif GAME == "Azul"
     const DIRECTORY = "Azul/"
-    const CUCB = 0.25   #Best UCB on 1000 & 5000 -MCTS matches. +18ELO vs 0.2 and +12ELO vs 0.
+    const CUCB = 0.25
     const HALFLIFE = 20.0
     const PARAMS_MCTS_ELO = Dict([100=>715, 400=>885, 1600 => 1054, 6400 => 1227])
 
 elseif GAME == "Resolve"
     const DIRECTORY = "Resolve/"
-    const CUCB = 1.5   #Best UCB on 1000 & 5000 -MCTS matches. +18ELO vs 0.2 and +12ELO vs 0.
+    const CUCB = 1.5
     const HALFLIFE = 7.0
     const PARAMS_MCTS_ELO = Dict([100=>715, 400=>885, 1600 => 1054, 6400 => 1227])
 else
@@ -63,6 +63,7 @@ const SURPRISE_WEIGHT = false
 
 
 # #MIDDLE a : after first iterations. Quality is poor and network definitely has to improve
+#=
 const LEARNING_PARAMS = Dict(
     "SIZE_REPLAYBUFFER" => 20000,
     "NGAMES" => 96,
@@ -81,17 +82,17 @@ const PCR_REDUCTION = 5
 const TEMP_INIT = 1.00
 const TEMP_FINAL = 0.20
 const SURPRISE_WEIGHT = false
+=#
 
 
 
 # #MIDDLE b : neural network is good, and can still be better with a bigger batchsize.
-#=
 const LEARNING_PARAMS = Dict(
-    "SIZE_REPLAYBUFFER" => 200000,
+    "SIZE_REPLAYBUFFER" => 80000,
     "NGAMES" => 96,
     "lr_min" => 5e-5,
     "lr_max" => 5e-3,
-    "MCTS_ITER" => 800,
+    "MCTS_ITER" => 400,
     "BATCHSIZE" => 128,
     "WEIGHT_vMCTS" => 0.5,
     "EPOCHS" => 1,
@@ -104,7 +105,6 @@ const PCR_REDUCTION = 5
 const TEMP_INIT = 1.00
 const TEMP_FINAL = 0.20
 const SURPRISE_WEIGHT = true
-=#
 
 # END : network is very good and will learn from a learning with 1600 iterations
 #=

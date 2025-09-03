@@ -6,51 +6,7 @@
     P in {human, MCTS, AZ} gives 6 functions to implement
 """
 
-
-
-#=
-function _save_game(first_player::Int, history_move::Vector{AbstractMove})
-    open(DIRECTORY*"last_game.txt", "w") do f
-        write(f, string(first_player)*"\n")
-        _G = new_game()
-        for m in history_move
-            write(f, Game.move_to_string(_G, m)*"\n")
-            play!(_G, m)
-        end
-        close(f)
-    end
-end
-
-function _load_game()
-    G = new_game()
-    history_move::Vector{AbstractMove} = []
-
-    if isfile(DIRECTORY*"last_game.txt")
-        println("Load previous game? (type 'y') ")
-        if readline() in ["y", "Y"]
-            file = open(DIRECTORY*"last_game.txt", "r")
-            first_player = parse(Int64, readline(file))
-            println("first_player est ", first_player)
-            for ln in eachline(file)    #structure de chaque ligne est : "move: string(move)"
-                println("line : ", ln)
-                push!(history_move, Game.string_to_move(G, ln))
-                play!(G, history_move[end])
-            end
-            close(file)
-
-        else
-            first_player = rand(1:2)
-        end
-
-    else
-        first_player = rand(1:2)
-    end
-
-    return first_player, G, history_move
-end=#
-
-
-function human_vs_AZ(maxIteration::Int = 0, timeLimit::Float64 = 1.0)
+function human_vs_AZ(; maxIteration::Int = 0, timeLimit::Float64 = 1.0)
 #     human_player, G, history_move = _load_game()
     human_player = rand(1:2)
     G = new_game()
@@ -87,7 +43,7 @@ function human_vs_AZ(maxIteration::Int = 0, timeLimit::Float64 = 1.0)
 end
 
 
-function MCTS_vs_AZ(maxIteration_mcts::Int = 0, timeLimit_mcts::Float64 = 1.0, maxIteration_az::Int = maxIteration_mcts, timeLimit_az::Float64 = timeLimit_mcts)
+function MCTS_vs_AZ(; maxIteration_mcts::Int = 0, timeLimit_mcts::Float64 = 1.0, maxIteration_az::Int = maxIteration_mcts, timeLimit_az::Float64 = timeLimit_mcts)
 #     mcts_player, G = _load_game()
     mcts_player = rand(1:NUM_PLAYERS)
     G = new_game()
@@ -123,7 +79,7 @@ function MCTS_vs_AZ(maxIteration_mcts::Int = 0, timeLimit_mcts::Float64 = 1.0, m
 end
 
 
-function human_vs_MCTS(maxIteration::Int = 0, timeLimit::Float64 = 1.0)
+function human_vs_MCTS(; maxIteration::Int = 0, timeLimit::Float64 = 1.0)
     G = new_game()
     mcts = MCTSAlgorithm(G, maxIteration, timeLimit)
     human_player = rand(1:NUM_PLAYERS)
@@ -143,7 +99,7 @@ function human_vs_MCTS(maxIteration::Int = 0, timeLimit::Float64 = 1.0)
     print(G)
 end
 
-function moves_helper(maxIteration::Int = 0, timeLimit::Float64 = 1.0; newGame=false, useMCTS=false)
+function moves_helper(; maxIteration::Int = 0, timeLimit::Float64 = 1.0, newGame=false, useMCTS=false)
     G = new_game()
     if useMCTS
         agent = MCTSAlgorithm(G, maxIteration, timeLimit)
@@ -241,7 +197,7 @@ function moves_helper(maxIteration::Int = 0, timeLimit::Float64 = 1.0; newGame=f
 end
 
 
-function MCTS_vs_MCTS(maxIteration::Int = 0, timeLimit::Float64 = 1.0)
+function MCTS_vs_MCTS(; maxIteration::Int = 0, timeLimit::Float64 = 1.0)
     G = new_game()
     mcts = MCTSAlgorithm(G, maxIteration, timeLimit)
 
@@ -295,9 +251,9 @@ function AZ_vs_AZ(maxIteration::Int, timeLimit::Float64, pathToNNA, pathToNNB)
     print(G)
 end
 
-function AZ_vs_AZ(maxIteration::Int = 0, timeLimit::Float64 = 1.0)
+function AZ_vs_AZ(; maxIteration::Int = 0, timeLimit::Float64 = 1.0)
     G = new_game()
-    nn = initialize_model(:last)
+    nn = initialize_model(:ELO)
     az = AZAlgorithm(G, nn, maxIteration, timeLimit)
 
     while !is_finished(G)

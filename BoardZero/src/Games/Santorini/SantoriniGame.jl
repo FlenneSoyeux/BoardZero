@@ -213,3 +213,84 @@ function Base.print(G::Santorini)
         println(CHAR[G.playerToPlay][G.buildWorker], " builds")
     end
 end
+
+
+function manual_input(G::Santorini; newGame=true)
+    println("List of gods : ")
+    for i in 1:NBGODS
+        println(i, "\t", GODNAMES[i])
+    end
+    for p in 1:2
+        try
+            while true
+                println("God for player ", p, " : ")
+                str = readline()
+                choice = parse(Int, str)
+                if 1 <= choice <= NBGODS
+                    G.gods[p] = choice
+                    break
+                end
+                println("God between 1 and ", NBGODS)
+            end
+        catch e
+            if isa(e, InterruptException)
+                rethrow(e)
+            end
+        end
+    end
+    print(G)
+    if newGame
+        return
+    end
+
+    # list of buildings
+    finished = false
+    println("Type buildings of type x y level, e.g. 5 5 2 for a level 2 building in (5,5). Type 's' to stop and 'r' to restart")
+    while !finished
+        try
+            print(G)
+            str = readline()
+            if str == "s"
+                finished = true
+            elseif str == "r"
+                G.board *= 0
+            else
+                x, y, lvl = split(str, ' ')
+                x = parse(Int, x)
+                y = parse(Int, y)
+                lvl = parse(Int, lvl)
+                G.board[xy2cell(x, y)] = lvl
+            end
+        catch e
+            println(e)
+            if isa(e, InterruptException)
+                rethrow(e)
+            end
+        end
+    end
+
+    # position of workers
+    for p in 1:2
+        println("print both workers position x y")
+        for i in 1:2
+            while true
+                try 
+                    str = readline()
+                    x, y = split(str, ' ')
+                    x = parse(Int, x)
+                    y = parse(Int, y)
+                    if xy2cell(x, y) > 25 || xy2cell(x, y) < 1
+                        error(string(x)*","*string(y)*" not on grid !")
+                    end
+                    G.workers[p, i] = xy2cell(x, y)
+                    break
+                catch e
+                    println(e)
+                    if isa(e, InterruptException)
+                        rethrow(e)
+                    end
+                end
+            end
+        end
+    end
+end

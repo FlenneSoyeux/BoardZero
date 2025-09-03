@@ -1,3 +1,4 @@
+const NUM_PLAYERS = 2
 const ACTION_RANDOM = 0
 const ACTION_TAKE = 1
 const ACTION_PLACE = 2

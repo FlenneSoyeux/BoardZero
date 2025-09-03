@@ -337,6 +337,7 @@ end
 
 function Game.get_human_move(G::Santorini) :: SantoriniMove
     moves = all_moves(G)
+    sort!(moves, by = m -> 1000000*m.idWorker + 10000*m.kind + 100*cell2xy(m.cell)[1] + cell2xy(m.cell)[2])
     for (i, m) in enumerate(moves)
         println(i, "\t", get_printable_move(G, m))
     end

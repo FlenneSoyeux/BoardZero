@@ -3,8 +3,8 @@ using Flux, Random
 
 #For NN
 const NN_TYPE = "Conv"
-const NUM_FILTERS = 196
-const NUM_LAYERS = 15
+const NUM_FILTERS = 128
+const NUM_LAYERS = 10
 const V_HEAD = 128
 const PI_HEAD = 128
 const SHAPE_OUTPUT = (36, 1, 1)
@@ -96,7 +96,6 @@ function Game.get_input_for_nn(G::Azul)
     input_playerb_pos[:, :, 1] = G.board[:, :, 3-p]
     input_playerb_pos[:, :, 2] .= get_filter_pattern(G.pattern[3-p, :])
     input_playerb_params = Float32[G.scores[3-p] / 10.0, min(G.floor[3-p], 7)/7.0, G.hasFirstPlayerTile[3-p]]
-
 
     # remaining :
     # 6 factories

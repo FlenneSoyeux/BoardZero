@@ -309,10 +309,12 @@ function Game.get_human_move(G::Boop)
             end
             s = sum([m.c == xy2cell(x, y) && m.cat == (cat=='c') for m in moves])
             if s == 0
+                println("s = 0")
+                display(moves)
                 continue
             elseif s == 1
                 for move in moves
-                    if move.c == xy2cell(x, y) && move.cat == (cat=='c')
+                    if move.c == xy2cell(x, y) && move.cat == (cat=="c")
                         return move
                     end
                 end

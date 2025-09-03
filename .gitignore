@@ -3,6 +3,8 @@
 /Boop/
 /Resolve/
 
+*.jls
+
 /BoardZero/src/Algorithm/AZ/error4.txt
 /BoardZero/src/Algorithm/MCGS.jl
 /BoardZero/src/Algorithm/README.txt
