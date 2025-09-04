@@ -789,7 +789,7 @@ function learn_from_scratch()
     println("Training on ", length(dataTrain), " and testing on ", length(dataTest), " data")
 
     #Optimizer
-    opt_state = Flux.setup( Flux.AdamW( 1e-3, (0.9, 0.999), 0.025 ), nn)
+    opt_state = Flux.setup( Flux.AdamW( LEARNING_PARAMS["lr_max"], (0.9, 0.999), 0.025 ), nn)
     #Flux.freeze!(opt_state.base)
     #Flux.freeze!(opt_state.trunk)
     #Flux.freeze!(opt_state.v_head)
@@ -809,12 +809,12 @@ function learn_from_scratch()
 
     #Training
     imini, lossMini = 1, 100000
-    for i in 1:40
+    for i in 1:50
         println("Training...")
         Flux.trainmode!(nn)
         for (η, d) in zip(sched, dataTrain)
         #for d in dataTrain
-            #Flux.adjust!(opt_state, η)
+            Flux.adjust!(opt_state, η)
             GPUArrays.@cached cache begin
                 gs = try Flux.gradient( m->loss(m, d...)[1], nn )[1] catch; Flux.gradient( m->loss(m, d...)[1], nn )[1] end
                 Flux.update!(opt_state, Flux.trainable(nn), gs)
@@ -847,7 +847,7 @@ function learn_from_scratch()
             break
         end end
 
-        if i == 1 || i == 10 || i == 20 || i == 40
+        if i == 10 || i == 30 || i == 50
             #push!(all_stats, cur_stats)
             #Stats.print(all_stats)
             NNet.save(nn, cur_stats.id)

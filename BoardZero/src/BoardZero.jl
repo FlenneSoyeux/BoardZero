@@ -40,10 +40,10 @@ function __init__()
     # └─────────────────────────────────────────────────────────────┘
     
     #human_vs_human()                       # Enter each moves manually
-    human_vs_AZ(maxIteration=1000)                  # You play vs the IA ! Be careful it's strong
+    #human_vs_AZ(maxIteration=1000)                  # You play vs the IA ! Be careful it's strong
     #human_vs_MCTS(100000, 0.0)             # If you want to play the vanilla MCTS algorithm
     #AZ_vs_AZ(timeLimit=10.0)                     # Show match of the IA against itself 
-    #moves_helper(0, 5.0; newGame=false)    # Game diagnosis : enter each moves you want AND have advice from the IA
+    moves_helper(timeLimit=5.0, newGame=true)    # Game diagnosis : enter each moves you want AND have advice from the IA
     
     # ┌─────────────────────────────────────────────────────────────┐
     # │                     TRAIN THE IA                            │
@@ -53,7 +53,8 @@ function __init__()
     #Trainer.train_parallel()               # Open previous NN (or create a blank new, see options in this function), runs several games, learns from it, repeat
     #Trainer.learn_from_scratch()           # Create a blank new NN and learns only from the stored positions (replayBuffer.jls)
 
-    #AZ_arena([15, 17, 21, 22]; NGAMES=150)      # Makes all the possible matches between the given model numbers, with NGAMES at every time, and compute an ELO from it
+    #AZ_arena([5, 18, 19]; NGAMES=100)      # Makes all the possible matches between the given model numbers, with NGAMES at every time, and compute an ELO from it
+    #AZ_arena([5, 19, 20]; NGAMES=100)      # Makes all the possible matches between the given model numbers, with NGAMES at every time, and compute an ELO from it
 
     
     # ┌─────────────────────────────────────────────────────────────┐
